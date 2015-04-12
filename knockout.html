@@ -14,18 +14,38 @@
 }
 #grid {
 	float:left;
-	width:80%;
-}
-
-#words {
-
-}
-.gridletters {
-	padding: 4em;
+	width:50%;
 	border-style: solid;
 	border-width: 1px;
 	-moz-border-radius: 15px;
 	border-radius: 15px;
+
+}
+
+#words {
+	border-style: solid;
+	border-width: 1px;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+	float:left;
+}
+.gridletters {
+	padding: 2em 2em;
+	text-align:center;
+
+}
+.fader {
+	-o-transition:.5s;
+  	-ms-transition:.5s;
+  	-moz-transition:.5s;
+  	-webkit-transition:.5s;
+  	/* ...and now for the proper property */
+  	transition:.5s;
+}
+.fader:hover {
+	color: red;
+	background-color:yellow;
+	font-face:bold;
 }
 </style>
 
@@ -37,7 +57,7 @@
 			<div id="grid"> 
 				<div class="gridletters" data-bind="foreach: gridRowsArrays">
 					<div class="row" data-bind="foreach: $data">
-						<span class ="letter" data-bind="text: $data"></span>
+						<span class ="letter fader" data-bind="text: $data, attr: {'id':'cell_' + $parentContext.$index()  + '_' + $index()}"></span>
 					</div>
 				</div>
 			</div>
@@ -51,8 +71,10 @@
 		<div id="bottom">
 		</div>
 	</body>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
-	<script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+<!-- 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
+	<script src="https://code.jquery.com/jquery-1.11.2.min.js"></script> -->
+	<script type="text/javascript" src="cdn/knockout.min.js"></script>
+	<script src="cdn/jquery.min.js"></script>
 	<script type="text/javascript" src="js/Word.js"></script>
 	<script type="text/javascript" src="js/Grid.js"></script>
 	<script type="text/javascript" src="js/model/GridViewModel.js"></script>
