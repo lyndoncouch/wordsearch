@@ -3,7 +3,7 @@ function Grid() {
 	var self = this;
 	var grid = [[]];
 
-var logging = window.logging;
+	var logging = window.logging;
 
 
 	self.hSize = 10;
@@ -12,9 +12,9 @@ var logging = window.logging;
 	self.answers = [];
 
 	var initialiseGrid = function() {
-		for (var i = 0; i < self.hSize; i++) {
+		for (var i = 0; i < self.vSize; i++) {
 			grid[i] = [];
-			for (var j = 0; j < self.vSize; j++) {
+			for (var j = 0; j < self.hSize; j++) {
 				grid[i][j] = "";
 			}
 		}
@@ -55,7 +55,7 @@ var logging = window.logging;
 			y+=direction.v;
 		}
 
-		answers.push({w:word, p:coords, d:direction.n});
+		self.answers.push({w:word, p:coords, d:direction.n});
 	}
 
 	var fillGrid = function() {
@@ -71,12 +71,12 @@ var logging = window.logging;
 
 	self.buildGrid = function() {
 		initialiseGrid();
-		wordsList.sort(function(w1, w2) {
+		self.wordsList.sort(function(w1, w2) {
 			return (w1.length() - w2.length()) * -1;
 		});
 
-		for (var i = 0; i< wordsList.length; i++) {
-			var word = wordsList[i];
+		for (var i = 0; i< self.wordsList.length; i++) {
+			var word = self.wordsList[i];
 
 			var cnt=0;
 			do {
@@ -102,12 +102,22 @@ var logging = window.logging;
 
 	}
 
+// 	self.getLetterAt = function(x,y) {
+// 		return grid[x][y];
+// 	}
+
 	self.getLetterAt = function(x,y) {
-		return grid[x][y];
+		return grid[y][x];
+	}
+
+	self.getRow = function(y) {
+		return grid[y];
 	}
 
 	return self;
 };
+
+
 
 Grid.prototype.directions = ["N","NE","E","SE","S","SW","W","NW"];
 Grid.prototype.directionMap = {

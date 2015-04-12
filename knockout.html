@@ -1,0 +1,52 @@
+<html>
+	<head>
+		<title>Knockout UI for Wordsearch</title>
+		<link href="css/wordsearch.css" type="text/css" rel="stylesheet" />
+	</head>
+<style>
+.letter {
+	display: inline-block;
+	width: 2em;
+}
+.row {
+	height: 2em;
+}
+#grid {
+
+}
+.gridletters {
+	padding: 4em;
+	border-style: solid;
+	border-width: 1px;
+}
+</style>
+
+	<body>	
+		<div id="top">
+			<h1>Knockout derived ui for wordsearch</h1>
+		</div>
+		<div id="main">
+			<div id="grid" > 
+				<div class="gridletters" data-bind="foreach: gridRowsArrays">
+					<div class="row" data-bind="foreach: $data">
+						<span class ="letter" data-bind="text: $data"></span>
+					</div>
+				</grid>
+			</div>
+			<div id="words" > 
+				<h1>words</h1>
+				<ul data-bind="foreach: answers">
+					<li> <span data-bind="text: $data.w.letters"></span></li>
+				</ul>
+			</div>
+		</div>
+		<div id="bottom">
+		</div>
+	</body>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
+	<script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+	<script type="text/javascript" src="js/Word.js"></script>
+	<script type="text/javascript" src="js/Grid.js"></script>
+	<script type="text/javascript" src="js/model/GridViewModel.js"></script>
+	<script type="text/javascript" src="js/app/wordSearchApp.js"></script>
+</html>
