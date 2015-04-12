@@ -7,17 +7,25 @@
 .letter {
 	display: inline-block;
 	width: 2em;
+	margin:0 auto;
 }
 .row {
 	height: 2em;
 }
 #grid {
+	float:left;
+	width:80%;
+}
+
+#words {
 
 }
 .gridletters {
 	padding: 4em;
 	border-style: solid;
 	border-width: 1px;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
 }
 </style>
 
@@ -25,18 +33,18 @@
 		<div id="top">
 			<h1>Knockout derived ui for wordsearch</h1>
 		</div>
-		<div id="main">
-			<div id="grid" > 
+		<div id="main" style="position:absolute;width:100%">
+			<div id="grid"> 
 				<div class="gridletters" data-bind="foreach: gridRowsArrays">
 					<div class="row" data-bind="foreach: $data">
 						<span class ="letter" data-bind="text: $data"></span>
 					</div>
-				</grid>
+				</div>
 			</div>
 			<div id="words" > 
 				<h1>words</h1>
 				<ul data-bind="foreach: answers">
-					<li> <span data-bind="text: $data.w.letters"></span></li>
+					<li> <span data-bind="text: $data.w.display()"></span></li>
 				</ul>
 			</div>
 		</div>
