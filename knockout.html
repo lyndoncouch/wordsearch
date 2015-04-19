@@ -57,7 +57,8 @@
 			<div id="grid"> 
 				<div class="gridletters" data-bind="foreach: gridRowsArrays">
 					<div class="row" data-bind="foreach: $data">
-						<span class ="letter fader" data-bind="text: $data, attr: {'id':'cell_' + $parentContext.$index()  + '_' + $index()}"></span>
+ 						<span class ="letter fader" data-bind="text: $data, attr: {'id':'cell_' + $index() + '_' + $parentContext.$index()}, click: $root.clickedLetter, event: {mouseover:$root.hoverLetter}"></span>
+<!--						<span class ="letter fader" data-bind="text: $data, attr: {'id':'cell_' + $parentContext.$index()  + '_' + $index()}"></span> -->
 					</div>
 				</div>
 			</div>
