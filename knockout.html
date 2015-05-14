@@ -19,7 +19,15 @@
 	border-width: 1px;
 	-moz-border-radius: 15px;
 	border-radius: 15px;
+}
 
+.noSelect {
+   	-webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 #words {
@@ -54,11 +62,12 @@
 			<h1>Knockout derived ui for wordsearch</h1>
 		</div>
 		<div id="main" style="position:absolute;width:100%">
-			<div id="grid"> 
+			<div id="grid" class="noSelect"> 
 				<div class="gridletters" data-bind="foreach: gridRowsArrays">
 					<div class="row" data-bind="foreach: $data">
- 						<span class ="letter fader" data-bind="text: $data, attr: {'id':'cell_' + $index() + '_' + $parentContext.$index()}, click: $root.clickedLetter, event: {mouseover:$root.hoverLetter}"></span>
+ 						<span class ="letter fader" data-bind="text: $data, attr: {'id':'cell_' + $index() + '_' + $parentContext.$index()}"></span>
 <!--						<span class ="letter fader" data-bind="text: $data, attr: {'id':'cell_' + $parentContext.$index()  + '_' + $index()}"></span> -->
+						<!--click: $root.clickedLetter, event: {mouseover:$root.hoverLetter}-->
 					</div>
 				</div>
 			</div>
@@ -69,7 +78,8 @@
 				</ul>
 			</div>
 		</div>
-		<div id="bottom">
+		<div id="bottom" style="background="yellow">
+			<span data-bind="text:selectedWord"></span>
 		</div>
 	</body>
 <!-- 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>

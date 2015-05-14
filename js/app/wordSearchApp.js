@@ -15,5 +15,10 @@
 
 	ko.applyBindings(window.gridModel);
 
+	$(".letter").mousedown(gridModel.mouseDownInGrid);
+	$("#grid").mouseup(gridModel.mouseUpInGrid);
+
+	$(".letter").mouseenter(window.gridModel.letterEnter);
+
 }(jQuery));
 
