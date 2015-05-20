@@ -5,28 +5,49 @@
 		self.firstLetter = ko.observable();
 		self.latestLetter = ko.observable();
 
+		self.firstLetterPos = {};
 
-		self.answers = ko.observableArray(grid.answers);
+		self.answers = ko.observableArray();
 		self.lastClicked = ko.observable();
 		self.latestHover = ko.observable();
 		self.direction = ko.observable();
 
+		
+// 		var canvas = document.getElementById("drawing");
+// 		self.context = canvas.getContext("2d");
 
+// self.context.fillStyle = "#ff0000";
+// self.context.fillRect(0,0, self.context.canvas.width, self.context.canvas.height);
+
+// console.log("(" + self.context.canvas.width + ", " + self.context.canvas.height + ")")
 
 		self.highLightedWord = ko.observable();
 		self.highlightCoords = ko.observable();
 		self.selectedWord = ko.observable();
 
 		var rowsArrays = [];
+
+
+		// setup the answers array
+		var answers = [];
+		$.each(grid.answers, function(i, answer) {
+			answers.push( ko.observable({found:false, word:answer}));
+		});
+		self.answers(answers);
 		
+
 		self.mouseUpInGrid = function(event) {
 			calculateLine();
 
-			$.each(self.answers(), function(i,word) {
-				if (word.w.display() == self.selectedWord()) {
+			$.each(self.answers(), function(i,answer) {
+				var answerObservable = answer();
+				if (answerObservable.word.w.display() == self.selectedWord()) {
+					answerObservable.found = true;
+					answer(answerObservable);
+					self.firstLetter(undefined);
+					self.latestLetter(undefined);
 
-					alert("FOUND " + self.selectedWord);
-
+					alert("FOUND " + self.selectedWord());
 				}
 			});	
 		};
@@ -35,17 +56,27 @@
 			var id = event.target.id;
 			var bits = id.split("_");
 			var letter = letterCoord(event.target.id);
+
+			var tt = $(event.target);
+
+			letter.cX=tt[0].offsetLeft + 16;
+			letter.cY=tt[0].offsetTop + 16;
+
+			self.context.moveTo(event.originalEvent.x, event.originalEvent.y);
 			self.firstLetter(letter);	
+
 		}
 
 		self.letterEnter = function(event) {
 			fixWhich(event);
 
-			console.log(event.which);
 			if (event.which == 1) {
 				var id = event.target.id;
 				var bits = id.split("_");
 				var letter = letterCoord(event.target.id);
+				var tt = $(event.target);
+				letter.cX=tt[0].offsetLeft + 16;
+				letter.cY=tt[0].offsetTop + 16;
 				self.latestLetter(letter);
 
 				calculateLine();
@@ -73,30 +104,12 @@
 		}
 		self.gridRowsArrays = ko.observableArray(rowsArrays);
 
-// 		self.clickedLetter = function(element,event) {
-// 			var id = event.target.id;
-// 			var bits = id.split("_");
-// 			self.lastClicked({x: new Number(bits[1]).valueOf(), y:new Number(bits[2]).valueOf()});
-// 			return true;
-// 		};
-
-// 		self.hoverLetter = function(element, event) {
-// 			console.log("ll " + self.lastClicked());
-// 			if (self.lastClicked()) {
-// 				var id = event.target.id;
-// 				var bits = id.split("_");
-// 				self.latestHover({x: new Number(bits[1]).valueOf(), y:new Number(bits[2]).valueOf()});
-// 				calculateLine();
-// 			}
-// 			return true;
-// 		}
-
 		var calculateLine = function() {
 			var x1 = self.firstLetter().x;
 			var y1 = self.firstLetter().y;
 
-			var x2 = self.latestLetter().x;
-			var y2 = self.latestLetter().y;
+			var x2 = (self.latestLetter() && self.latestLetter().x) || x1 ;
+			var y2 = (self.latestLetter() && self.latestLetter().y) || y1;
 
 			if (x1 == x2 && y1 == y2) {
 				return;
@@ -149,11 +162,38 @@
 
 			self.selectedWord(selected);
 
+			// draw a line....
+			if (selected) {
+self.drawCurrentLine()
+
+			}
+
 
 		}
 
 		var calcWord = function(x1,x2,y1,y2) {
 
+		}
+
+		self.drawCurrentLine = function() {
+			var cx1 = self.firstLetter().cX;
+			var cy1 = self.firstLetter().cY;
+
+			var cx2 = (self.latestLetter() && self.latestLetter().cX) || cx1;
+			var cy2 = (self.latestLetter() && self.latestLetter().cY) || cy1;
+
+			var ctx = self.context;
+			ctx.beginPath();
+			ctx.lineWidth=10;
+									
+			ctx.strokeStyle = "#ff00ff";			
+			
+
+			ctx.lineCap="round";
+			ctx.moveTo(cx1,cy1);
+			ctx.lineTo(cx2,cy2);
+			console.log("(" + cx1 + ", " + cy1 + ")  to (" + cx2 + ", " + cy2 + ")");
+			ctx.stroke();			
 		}
 
 
