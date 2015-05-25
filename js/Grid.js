@@ -1,3 +1,4 @@
+"use strict";
 
 function Grid() {
 	var self = this;
@@ -18,7 +19,7 @@ function Grid() {
 				grid[i][j] = "";
 			}
 		}
-		answers = [];
+		self.answers = [];
 	};
 
 	var doesWordFit = function (word, coords, direction) {
@@ -39,7 +40,7 @@ function Grid() {
 			}
 		}
 		return true;
-	}
+	};
 
 	var addWordToGrid = function(word, coords, direction) {
 		if (logging) {
@@ -56,7 +57,7 @@ function Grid() {
 		}
 
 		self.answers.push({w:word, p:coords, d:direction.n});
-	}
+	};
 
 	var fillGrid = function() {
 		for (var i = 0; i < self.hSize; i++ ) {
@@ -67,7 +68,7 @@ function Grid() {
 				}
 			}
 		}
-	}
+	};
 
 	self.buildGrid = function() {
 		initialiseGrid();
@@ -77,45 +78,34 @@ function Grid() {
 
 		for (var i = 0; i< self.wordsList.length; i++) {
 			var word = self.wordsList[i];
-
+			var fit, position, direction;
 			var cnt=0;
 			do {
-				var position = self.pickACoordinate();
-				var direction = self.pickADirection();
-				var fit = doesWordFit(word, position, direction);
+				position = self.pickACoordinate();
+				direction = self.pickADirection();
+				fit = doesWordFit(word, position, direction);
 			} while (!fit && cnt++ < 100);
-
-			if(logging) {
-				console.log(word.display() + " (" + position.x + ", " + position.y + ") " + direction.n + "   "  + fit);
-			}
 
 			if (fit) {
 				addWordToGrid(word, position, direction);
-				if (logging) {
-					showGrid();
-				}
 			}  
 
 		}
 
 		fillGrid();
 
-	}
-
-// 	self.getLetterAt = function(x,y) {
-// 		return grid[x][y];
-// 	}
+	};
 
 	self.getLetterAt = function(x,y) {
 		return grid[y][x];
-	}
+	};
 
 	self.getRow = function(y) {
 		return grid[y];
-	}
+	};
 
 	return self;
-};
+}
 
 
 

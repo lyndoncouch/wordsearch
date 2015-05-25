@@ -1,3 +1,5 @@
+"use strict";
+
 function Word(initial) {
 	var self = this;
 
@@ -12,7 +14,7 @@ function Word(initial) {
 	}
 
 	return self;
-};
+}
 
 Word.prototype.length = function() {
 	return this.letters.length;	
@@ -24,4 +26,4 @@ Word.prototype.display = function() {
 
 Word.prototype.get = function(n) {
 	return this.letters[n];
-}
+};
