@@ -12,7 +12,7 @@
 		var context = canvas.getContext("2d");
 		var currentLine = {};
 
-		self.selectedWord = ko.observable();
+		var selectedWord;
 
 		var canvasBackgroundColour = "#ffffff";
 		var canvasAnswerColour = "#fe0011";
@@ -43,7 +43,7 @@
 
 			$.each(self.answers(), function(i,answer) {
 				var answerObservable = answer();
-				if (answerObservable.word.w.display() == self.selectedWord()) {
+				if (answerObservable.word.w.display() == selectedWord) {
 
 					var start = {x:firstLetter.cX, y:firstLetter.cY};
 					var end = getCanvasPositionFromEvent(event);
@@ -54,7 +54,7 @@
 					answer(answerObservable);
 
 					clearWord();
-					alert("FOUND " + self.selectedWord());
+					alert("FOUND " + selectedWord);
 				}
 			});	
 		};
@@ -67,7 +67,7 @@
 
 			firstLetter = letter;	
 			currentLine = {};
-			console.log("firstLetter", firstLetter)
+			console.log("firstLetter", firstLetter);
 		};
 
 		self.letterEnter = function(event) {
@@ -150,12 +150,12 @@
 			if (y1 == y2) {
 				// horizontal
 				if (x1 < x2) {
-					direction = "W";
+					direction = "E";
 					for (i =x1; i<=x2; i++) {
 						selected += grid.getLetterAt(i,y1);
 					}
 				} else {
-					direction = "E";
+					direction = "W";
 					for (i =x1; i>=x2; i--) {
 						selected += grid.getLetterAt(i,y1);
 					}
@@ -164,17 +164,17 @@
 			} else if(x1 == x2) {
 				// vertical
 				if (y1 < y2) {
-					direction = "N";
+					direction = "S";
 					for (i=y1; i <= y2; i++) {
 						selected += grid.getLetterAt(x1,i);
 					}
 				} else {
-					direction = "S";
+					direction = "N";
 					for (i=y1; i >= y2; i--) {
 						selected += grid.getLetterAt(x1,i);
 					}					
 				}
-			} else if (x2-x1 == y2-y1) {
+			} else if (Math.abs(x2-x1) == Math.abs(y2-y1)) {
 				// diagonal
 				var length = Math.abs(x2 - x1);				
 				var sign = Math.sign(x2 - x1);
@@ -184,22 +184,22 @@
 					selected += grid.getLetterAt(x,y);
 				}
 				if (y1 < y2) {
-					direction = "N";
-				} else {
 					direction = "S";
+				} else {
+					direction = "N";
 				}
 				if (x1 < x2) {
-					direction += "W";
-				} else {
 					direction += "E";
+				} else {
+					direction += "W";
 				}
 			}
 
 
-			self.selectedWord(selected);
 
 			// draw a line....
 			if (selected) {
+				selectedWord = selected;
 				currentLine = new Line(
 						getCanvasPositionFromLetterPos(x1, y1), 
 						getCanvasPositionFromLetterPos(x2, y2),
@@ -212,7 +212,7 @@
 			direction = "";
 			firstLetter = undefined;
 			latestLetter = undefined;
-			self.selectedWord("");
+			selectedWord = undefined;
 			currentLine = {};
 		};
 
