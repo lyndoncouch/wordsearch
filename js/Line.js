@@ -30,6 +30,7 @@ function Line(start, end, direction, colour, lineWidth) {
         // set up line details
         context.lineWidth = self.lineWidth;
         context.strokeStyle = self.colour;
+        context.lineCap = 'round';
 
         // draw the line
         context.beginPath();

@@ -1,5 +1,9 @@
 "use strict";
 (function($, ko) {
+
+	var pixelOffsetX = 16;
+	var pixelOffsetY = 8;
+
 	window.GridViewModel = function(grid) {
 		var self = this;
 
@@ -43,7 +47,7 @@
 
 			$.each(self.answers(), function(i,answer) {
 				var answerObservable = answer();
-				if (answerObservable.word.w.display() == selectedWord) {
+				if (answerObservable.word.w.display() === selectedWord) {
 
 					var start = {x:firstLetter.cX, y:firstLetter.cY};
 					var end = getCanvasPositionFromEvent(event);
@@ -53,8 +57,8 @@
 					answerObservable.found = true;
 					answer(answerObservable);
 
-					clearWord();
 					alert("FOUND " + selectedWord);
+					clearWord();
 				}
 			});	
 		};
@@ -67,7 +71,6 @@
 
 			firstLetter = letter;	
 			currentLine = {};
-			console.log("firstLetter", firstLetter);
 		};
 
 		self.letterEnter = function(event) {
@@ -88,8 +91,8 @@
 		var getCanvasPositionFromEvent = function(event) {
 			var target = $(event.target);
 
-			var x = target[0].offsetLeft + 16;
-			var y = target[0].offsetTop + 16;
+			var x = target[0].offsetLeft + pixelOffsetX;
+			var y = target[0].offsetTop + pixelOffsetY;
 			return {x:x, y:y};	
 		};
 
@@ -100,7 +103,7 @@
 			var cX = offset.left - gridOffset.left;
 			var cY = offset.top - gridOffset.top;
 
-			return {x:cX + 16, y:cY + 16};
+			return {x:cX + pixelOffsetX, y:cY + pixelOffsetY};
 		};
 
 
@@ -137,8 +140,8 @@
 				x2 = pos.x;
 				y2 = pos.y;
 			} else {
-				x2 = (latestLetter && latestLetter.x) || x1 ;
-				y2 = (latestLetter && latestLetter.y) || y1;
+				x2 = (latestLetter && latestLetter.x );// || x1 ;
+				y2 = (latestLetter && latestLetter.y );// || y1;
 			}
 
 			if (x1 == x2 && y1 == y2) {
@@ -195,8 +198,6 @@
 				}
 			}
 
-
-
 			// draw a line....
 			if (selected) {
 				selectedWord = selected;
@@ -225,17 +226,7 @@
 			$.each(self.answers(), function(i, answerObservable) {
 				var answer = answerObservable();
 				if (answer.found) {
-
-console.log("answer found", answer.line);
-
-// 					// draw answered lines
-// 					context.lineWidth=10;
-// 		 			context.strokeStyle = canvasAnswerColour;//"#ff00ff";			
-// // 		 			context.lineCap="round";
-// 					context.beginPath();
-// 					context.moveTo(answer.line.start.x, answer.line.start.y);
-// 					context.lineTo(answer.line.end.x, answer.line.end.y);
-// 					context.stroke();
+//console.log("answer found", answer.line);
 					answer.line.simpleDraw(context);
 				}
 
@@ -244,12 +235,6 @@ console.log("answer found", answer.line);
 			// draw the current line
 			if (currentLine && currentLine.start && currentLine.end) {
 				// draw current line
-// 				context.lineWidth=10;
-// 				context.strokeStyle = canvasCurrenctColour;
-// 				context.beginPath();
-// 				context.moveTo(currentLine.start.x, currentLine.start.y);
-// 				context.lineTo(currentLine.end.x, currentLine.end.y);
-// 				context.stroke();
 				currentLine.simpleDraw(context);
 			}
 		};

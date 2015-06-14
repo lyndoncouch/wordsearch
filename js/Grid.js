@@ -6,7 +6,6 @@ function Grid() {
 
 	var logging = window.logging;
 
-
 	self.hSize = 10;
 	self.vSize = 10;
 	self.wordsList = [];
@@ -121,15 +120,26 @@ Grid.prototype.directionMap = {
 	"NW": 	{n: "NW", h: -1, v: -1}
 };
 
+Grid.prototype.letterList = 'abcdefghijklmnopqrstuvwxyz';
+
 // nieve random letter. equal chance all 26.
 Grid.prototype.randomLetter = function() {
-	var l = Math.floor(Math.random() * 26);
-	return "abcdefghijklmnopqrstuvwxyz".substring(l,l+1);
+	var l, letter;
+	if ($.isArray(Grid.prototype.letterList)) {
+		l = Math.floor(Math.random() * Grid.prototype.letterList.size());
+		letter = Grid.prototype.letterList[l];
+	} else {
+		l = Math.floor(Math.random() * Grid.prototype.letterList.length);
+		letter = Grid.prototype.letterList.substring(l, l+1);
+	}
+
+	return letter;
 };
 
 Grid.prototype.pickADirection = function() {
 	var r = Math.floor(Math.random() * 8);
-	return this.directionMap[this.directions[r]];
+	var d = this.directionMap[this.directions[r]];
+	return d;
 };
 
 Grid.prototype.pickACoordinate = function() {
