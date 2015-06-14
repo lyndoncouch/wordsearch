@@ -24,19 +24,27 @@ function Line(start, end, direction, colour, lineWidth) {
     self.end = end;
     self.direction = direction;
     self.colour = colour || "#000000";
-    self.lineWidth = lineWidth || 10;
+    self.lineWidth = lineWidth || 20;
 
     self.simpleDraw = function(context) {
         // set up line details
         context.lineWidth = self.lineWidth;
         context.strokeStyle = self.colour;
-        context.lineCap = 'round';
+        context.lineCap = "round";
 
         // draw the line
         context.beginPath();
-        context.moveTo(self.start.x, self.start.y);
-        context.lineTo(self.end.x, self.end.y);
+        context.moveTo(self.start.x + 0.5, self.start.y + 0.5);
+        context.lineTo(self.end.x + 0.5, self.end.y + 0.5);
         context.stroke();
+
+        context.lineWidth = self.lineWidth - 10;
+        context.strokeStyle = "#ffffff";
+        context.beginPath();    
+        context.moveTo(self.start.x + 0.5, self.start.y + 0.5);
+        context.lineTo(self.end.x + 0.5, self.end.y + 0.5);
+        context.stroke();        
+
     };
 
     return self;

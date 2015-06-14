@@ -15,12 +15,15 @@
 		var canvas = document.getElementById("drawing");
 		var context = canvas.getContext("2d");
 		var currentLine = {};
+		var currentPosLine = {};
+
 
 		var selectedWord;
 
 		var canvasBackgroundColour = "#ffffff";
 		var canvasAnswerColour = "#fe0011";
 		var canvasCurrenctColour = "#00ff88";
+		var currentPosColour = "#ff00ff";
 
 		var gridOffset = $("#grid").offset();
 
@@ -71,6 +74,7 @@
 
 			firstLetter = letter;	
 			currentLine = {};
+			currentPosLine = {};
 		};
 
 		self.letterEnter = function(event) {
@@ -83,6 +87,10 @@
 				letter.cX=pos.x;
 				letter.cY=pos.y;
 				latestLetter = letter;
+
+				currentPosLine = new Line({x:firstLetter.cX, y:firstLetter.cY},
+					{x:pos.x, y:pos.y},null, currentPosColour);
+					
 
 				calculateLine();
 			}
@@ -215,6 +223,7 @@
 			latestLetter = undefined;
 			selectedWord = undefined;
 			currentLine = {};
+			currentPosLine = {};
 		};
 
 		var drawCanvas = function() {
@@ -231,6 +240,10 @@
 				}
 
 			});
+
+			if (currentPosLine && currentPosLine.start && currentPosLine.end) {
+				currentPosLine.simpleDraw(context);
+			}
 
 			// draw the current line
 			if (currentLine && currentLine.start && currentLine.end) {
