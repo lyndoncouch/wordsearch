@@ -17,7 +17,6 @@
 		var currentLine = {};
 		var currentPosLine = {};
 
-
 		var selectedWord;
 
 		var canvasBackgroundColour = "#ffffff";
@@ -45,7 +44,7 @@
 		})();
 
 		self.mouseUpInGrid = function(event) {
-			currentLine = {};
+// 			currentLine = {};
 			calculateLine(event);
 
 			$.each(self.answers(), function(i,answer) {
@@ -54,7 +53,7 @@
 
 					var start = {x:firstLetter.cX, y:firstLetter.cY};
 					var end = getCanvasPositionFromEvent(event);
-					var answerLine = new Line(start, end, direction, canvasAnswerColour);
+					var answerLine = new Line(currentLine.start, currentLine.end, currentLine.direction, canvasAnswerColour);
 					answerObservable.line = answerLine;
 					
 					answerObservable.found = true;

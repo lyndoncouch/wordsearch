@@ -2,6 +2,7 @@
 (function($) {
 
 	var w = ["horse","dog","cat","icecream","cow","fishfinger","chicken","snake"];
+
 	var wordsList = [];
 	for (var i = 0, length = w.length; i < length; i++) {
 		var ww = w[i];
@@ -19,9 +20,11 @@
 	var gridEl = $("#grid");
 	var canvEl = $("#drawing");
 
+
 	$(".letter").mousedown(window.gridModel.mouseDownInGrid);
 	gridEl.mouseup(window.gridModel.mouseUpInGrid);
 	$(".letter").mouseenter(window.gridModel.letterEnter);
+
 
 	var positioningProps = ["float","position","width","height","left","top","marginLeft","marginTop","paddingLeft","paddingTop"];
 
@@ -33,9 +36,6 @@
 	var width = gridEl.css("width");
 	var height = gridEl.css("height");
 	canvEl.attr({width:width, height:height});
-
-	var canvas = document.getElementById("drawing");
-	window.gridModel.context = canvas.getContext("2d");
 
 }(jQuery));
 

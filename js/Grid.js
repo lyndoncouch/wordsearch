@@ -31,7 +31,7 @@ function Grid() {
 		for (var i = 0, length = word.length()-1; i < length ; i++) {
 			x+=direction.h;
 			y+=direction.v;
-			if (x<0 || x >= self.hSize || y<0 || y>=self.vSize) {
+			if (x<0 || x >= self.hSize || y<0 || y >= self.vSize) {
 				return false;
 			}
 			if (grid[x][y] !== "" && grid[x][y] !== word.get(i+1)) {
@@ -126,7 +126,7 @@ Grid.prototype.letterList = 'abcdefghijklmnopqrstuvwxyz';
 Grid.prototype.randomLetter = function() {
 	var l, letter;
 	if ($.isArray(Grid.prototype.letterList)) {
-		l = Math.floor(Math.random() * Grid.prototype.letterList.size());
+		l = Math.floor(Math.random() * Grid.prototype.letterList.length);
 		letter = Grid.prototype.letterList[l];
 	} else {
 		l = Math.floor(Math.random() * Grid.prototype.letterList.length);
